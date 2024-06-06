@@ -1,61 +1,77 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const mysql = require('mysql');
-
+const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
-const PORT = 3000;  // 변경된 포트 번호
+const port = process.env.PORT || 3004;
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// MySQL 연결 설정
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '9027',  // 설정한 루트 비밀번호로 변경
-    database: 'todo_app',
-    charset: 'utf8'
+    user: 'eunki',
+    password: '9027',
+    database: 'todo_app'
 });
 
-db.connect(err => {
+// MySQL 연결
+db.connect((err) => {
     if (err) {
-        console.error('Database connection failed:', err.stack);
+        console.error('MySQL 연결 오류:', err);
         return;
     }
-    console.log('Connected to database.');
+    console.log('MySQL connected...');
 });
 
+// 정적 파일 서비스
+app.use(express.static(path.join(__dirname, 'public')));
+
+// GET 요청 처리: 모든 할 일 목록 가져오기
 app.get('/api/todos', (req, res) => {
-    db.query('SELECT * FROM todos', (error, results) => {
-        if (error) throw error;
+    db.query('SELECT * FROM todos', (err, results) => {
+        if (err) {
+            console.error('조회 오류:', err);
+            res.status(500).send('Server error');
+            return;
+        }
         res.json(results);
     });
 });
 
+// POST 요청 처리: 새 할 일 추가
 app.post('/api/todos', (req, res) => {
-    const todo = { text: req.body.text, completed: false };
-    db.query('INSERT INTO todos SET ?', todo, (error, results) => {
-        if (error) throw error;
-        res.json({ id: results.insertId, ...todo });
+    const newTodo = { text: req.body.text };
+    db.query('INSERT INTO todos SET ?', newTodo, (err, result) => {
+        if (err) {
+            console.error('삽입 오류:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+        res.status(201).json({ id: result.insertId, ...newTodo });
     });
 });
 
+// DELETE 요청 처리: 할 일 삭제
 app.delete('/api/todos/:id', (req, res) => {
-    db.query('DELETE FROM todos WHERE id = ?', [req.params.id], (error, results) => {
-        if (error) throw error;
+    const todoId = req.params.id;
+    db.query('DELETE FROM todos WHERE id = ?', [todoId], (err, result) => {
+        if (err) {
+            console.error('삭제 오류:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send('Todo not found');
+            return;
+        }
         res.status(204).send();
     });
 });
 
-// Serve static files
-app.use(express.static('public'));
-
-// Serve the index.html on the root route
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// 서버 시작
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
 

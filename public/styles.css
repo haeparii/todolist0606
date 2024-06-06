@@ -1,83 +1,138 @@
+/* 기존 CSS 코드 유지 */
+
 body {
-    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* 상단 배치를 위해 flex-start 사용 */
+    align-items: flex-start;
     height: 100vh;
-    margin: 0;
-    background-color: #f7f7f7;
-    text-align: center;
+    background-color: #f0f0f0;
 }
 
 #app {
-    width: 95%; /* 전체 너비를 95%로 설정 */
-    max-width: 1200px; /* 최대 너비를 600px로 설정 */
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* 상단에 위치하도록 약간의 여백 추가 */
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    text-align: center;
+    top: 2%;
 }
 
-h1 {
-    font-size: 24px; /* 폰트 사이즈를 조정합니다 */
+#todo-title {
     font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.auth-links {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.auth-links a {
+    font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none;
+    color: #333;
 }
 
 .input-container {
     display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-container input {
+    width: 92.5%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.input-container button {
+    width: 15%;
+    padding: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-container button#add-task {
+    background-color: #28a745;
+}
+
+ul#tasks {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+}
+
+ul#tasks li {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
     justify-content: space-between;
+}
+
+ul#tasks li button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 로그인 및 회원가입 페이지 스타일 추가 */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 50px; /* Adjust this value to move the box up */
+}
+
+.auth-box {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+    margin-top: -50px; /* Adjust this value to move the box up */
+}
+
+.auth-box h2 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 1.5em;
     margin-bottom: 20px;
 }
 
-input[type="text"] {
-    flex: 1;
+.auth-box input {
+    width: 100%;
     padding: 10px;
-    font-size: 16px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px;
-    box-sizing: border-box; /* 줄 맞춤을 위해 추가 */
+    box-sizing: border-box; /* Add this to include padding in width calculation */
 }
 
-button {
-    padding: 8px 16px; /* 버튼 크기를 줄임 */
-    font-size: 14px; /* 버튼 폰트 사이즈를 줄임 */
+.auth-box button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
-    background-color: #28a745;
-    color: white;
     cursor: pointer;
-    flex-shrink: 0; /* 버튼 크기를 일정하게 유지 */
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    padding: 10px;
-    font-size: 14px; /* 리스트 폰트 사이즈를 14px로 설정 */
-    font-family: 'Noto Sans KR', sans-serif; /* 리스트 글자체를 Noto Sans KR로 설정 */
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* 줄 맞춤을 위해 추가 */
-    background-color: #f1f1f1; /* 회색 음영 박스 */
-    margin-bottom: 10px; /* 리스트 항목 간 간격 추가 */
-    border-radius: 5px;
-}
-
-li button {
-    padding: 6px 12px; /* 완료 버튼 크기를 조정 */
-    background-color: #dc3545;
-}
-
-li button:hover {
-    background-color: #c82333;
 }
 

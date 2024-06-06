@@ -8,14 +8,80 @@
 </head>
 <body>
     <div id="app">
-        <h1>To-Do List</h1>
+        <h1 id="todo-title"></h1>
         <div class="input-container">
             <input type="text" id="new-task" placeholder="Enter a new task">
-            <button id="add-task">Add Task</button>
+            <button id="add-task">추가</button>
         </div>
-        <ul id="tasks">
-        </ul>
+        <ul id="tasks"></ul>
     </div>
-    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('로그인이 필요합니다.');
+                window.location.href = '/login.html';
+            }
+
+            document.getElementById('add-task').addEventListener('click', async () => {
+                const text = document.getElementById('new-task').value;
+
+                const response = await fetch('/api/todos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    },
+                    body: JSON.stringify({ text }),
+                });
+
+                if (response.ok) {
+                    const todo = await response.json();
+                    addTodoToList(todo);
+                    document.getElementById('new-task').value = '';
+                } else {
+                    alert('할 일 추가 실패');
+                }
+            });
+
+            async function fetchTodos() {
+                const response = await fetch('/api/todos', {
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                if (response.ok) {
+                    const todos = await response.json();
+                    todos.forEach(addTodoToList);
+                } else {
+                    alert('할 일 목록 로드 실패');
+                }
+            }
+
+            function addTodoToList(todo) {
+                const li = document.createElement('li');
+                li.textContent = todo.text;
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '완료';
+                deleteButton.addEventListener('click', async () => {
+                    const response = await fetch(`/api/todos/${todo.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': token
+                        }
+                    });
+                    if (response.ok) {
+                        li.remove();
+                    } else {
+                        alert('할 일 삭제 실패');
+                    }
+                });
+                li.appendChild(deleteButton);
+                document.getElementById('tasks').appendChild(li);
+            }
+
+            fetchTodos();
+        });
+    </script>
 </body>
 </html>
