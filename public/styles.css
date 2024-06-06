@@ -1,0 +1,83 @@
+body {
+    font-family: 'Nanum Myeongjo', serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 상단 배치를 위해 flex-start 사용 */
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+#app {
+    width: 95%; /* 전체 너비를 95%로 설정 */
+    max-width: 1200px; /* 최대 너비를 600px로 설정 */
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* 상단에 위치하도록 약간의 여백 추가 */
+}
+
+h1 {
+    font-size: 24px; /* 폰트 사이즈를 조정합니다 */
+    font-family: 'Nanum Myeongjo', serif;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    box-sizing: border-box; /* 줄 맞춤을 위해 추가 */
+}
+
+button {
+    padding: 8px 16px; /* 버튼 크기를 줄임 */
+    font-size: 14px; /* 버튼 폰트 사이즈를 줄임 */
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    flex-shrink: 0; /* 버튼 크기를 일정하게 유지 */
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    font-size: 14px; /* 리스트 폰트 사이즈를 14px로 설정 */
+    font-family: 'Noto Sans KR', sans-serif; /* 리스트 글자체를 Noto Sans KR로 설정 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 줄 맞춤을 위해 추가 */
+    background-color: #f1f1f1; /* 회색 음영 박스 */
+    margin-bottom: 10px; /* 리스트 항목 간 간격 추가 */
+    border-radius: 5px;
+}
+
+li button {
+    padding: 6px 12px; /* 완료 버튼 크기를 조정 */
+    background-color: #dc3545;
+}
+
+li button:hover {
+    background-color: #c82333;
+}
+
